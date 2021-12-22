@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NMCP.Implementations.Database;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,29 +13,18 @@ namespace NMCP.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
+        [Route("hello")]
+        public string ConnStatus()
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            using (SqlConnection conn = new SqlConnection(SqlConnectionManager.ConnectionString))
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                SqlCommand cmd = new SqlCommand("INSERT INTO DistributorData (LastName, FirstName, DateOfBirth, Gender, PictureUrl, IsVerifiedUser,ContactType,ContactInfo,AddressType,UserAddress) VALUES ('Cardinal', 'Tom B. Erichsen', '22/01/2000', '0', 'someurl', '0', '1','555111222','1','BakerStreet 51 ave')");
+                conn.Open();
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            return "test";
         }
     }
 }

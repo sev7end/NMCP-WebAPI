@@ -9,7 +9,10 @@ namespace NMCP.Implementations.Services
     {
         public DistributorAuthService()
         {
+            public void RegisterDistributorAuth(int Id, )
+            {
 
+            }
         }
     }
 }
