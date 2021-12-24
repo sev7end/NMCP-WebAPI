@@ -21,8 +21,12 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand($"INSERT INTO ReferalData" +
-                    "(Id, ReferallId,  ReferedUsers, ReferallLevel) VALUES" +
-                    $"({referalData.ReferalId}, {referalData.ReferalId},{referalData.ReferedUsers},{referalData.ReferallLevel}");
+                    "(Id, ReferallId,  ReferedUsers, ReferallLevel) VALUES " +
+                    "(@Id, @ReferalId, @ReferedUsers, @ReferalLevel)");
+                cmd.Parameters.Add(new SqlParameter("Id",referalData.Id));
+                cmd.Parameters.Add(new SqlParameter("ReferalId",referalData.ReferalId));
+                cmd.Parameters.Add(new SqlParameter("ReferedUsers",referalData.ReferedUsers));
+                cmd.Parameters.Add(new SqlParameter("ReferalLevel",referalData.ReferallLevel));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -34,7 +38,11 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand($"UPDATE ReferalData SET" +
-                    $"ReferedUsers = {referalData.ReferedUsers} WHERE Id = {referalData.Id}");
+                    $"ReferedUsers = @ReferedUsers WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", referalData.Id));
+                cmd.Parameters.Add(new SqlParameter("ReferalId", referalData.ReferalId));
+                cmd.Parameters.Add(new SqlParameter("ReferedUsers", referalData.ReferedUsers));
+                cmd.Parameters.Add(new SqlParameter("ReferalLevel", referalData.ReferallLevel));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -57,7 +65,7 @@ namespace NMCP.Implementations.Database
             List<IReferalData> referalData = new List<IReferalData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM ReferalData WHERE Id = {Id}");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM ReferalData WHERE Id = {Id}");
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())
@@ -75,7 +83,7 @@ namespace NMCP.Implementations.Database
                 }
                 conn.Close();
             }
-            return referalData.First();
+            return referalData.Count!= 0 ? referalData.First() : null;
         }
         public List<IReferalData> GetReferals()
         {

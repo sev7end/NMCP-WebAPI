@@ -22,11 +22,20 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
 
-                SqlCommand cmd = new SqlCommand($"INSERT INTO DistributorData"+
-                    "(LastName, FirstName, DateOfBirth, Gender, PictureUrl, IsVerifiedUser,ContactType,ContactInfo,AddressType,UserAddress) VALUES"+
-                    $"({distributorData.LastName} , {distributorData.FirstName}, {distributorData.DateOfBirth}, "+
-                    $"{(int)distributorData.Gender}, {distributorData.PictureUrl}, {distributorData.IsUserVerified},"+
-                    $" {(int)distributorData.contactType},{distributorData.ContactInfo},{(int)distributorData.addressType},{distributorData.UserAddress}");
+                SqlCommand cmd = new SqlCommand($"INSERT INTO DistributorData" +
+                    "(LastName, FirstName, DateOfBirth, Gender, PictureUrl, IsVerifiedUser,ContactType,ContactInfo,AddressType,UserAddress,UniqueId) VALUES" +
+                   "(@LastName,@FirstName, @DateOfBirth, @Gender, @PictureUrl, @IsUserVerified,@ContactType,@ContactInfo,@AddressType,@UserAddress,@UniqueId)");
+                cmd.Parameters.Add(new SqlParameter("LastName", distributorData.LastName));
+                cmd.Parameters.Add(new SqlParameter("FirstName", distributorData.FirstName));
+                cmd.Parameters.Add(new SqlParameter("DateOfBirth", distributorData.DateOfBirth));
+                cmd.Parameters.Add(new SqlParameter("Gender", (int)distributorData.Gender));
+                cmd.Parameters.Add(new SqlParameter("PictureUrl", distributorData.PictureUrl));
+                cmd.Parameters.Add(new SqlParameter("IsUserVerified",distributorData.IsUserVerified));
+                cmd.Parameters.Add(new SqlParameter("ContactType", (int)distributorData.contactType));
+                cmd.Parameters.Add(new SqlParameter("ContactInfo",distributorData.ContactInfo));
+                cmd.Parameters.Add(new SqlParameter("AddressType", (int)distributorData.addressType));
+                cmd.Parameters.Add(new SqlParameter("UserAddress", distributorData.UserAddress));
+                cmd.Parameters.Add(new SqlParameter("UniqueId", distributorData.UniqueId));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -37,11 +46,22 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"UPDATE DistributorData SET LastName = {distributorData.LastName}"+
-                    $", FirstName = {distributorData.FirstName}, DateOfBirth = {distributorData.DateOfBirth}, Gender = {(int)distributorData.Gender} " +
-                    $", PictureUrl = {distributorData.PictureUrl} , IsVerifiedUser = {distributorData.IsUserVerified},ContactType={(int)distributorData.contactType}," +
-                    $"ContactInfo={distributorData.ContactInfo}, AddressType={(int)distributorData.addressType}, UserAddres={distributorData.UserAddress}" +
+                SqlCommand cmd = new SqlCommand("UPDATE DistributorData SET LastName = @LastName"+
+                    ", FirstName = @FirstName, DateOfBirth = @DateOfBirth, Gender = @Gender " +
+                    ", PictureUrl = @PictureUrl , IsVerifiedUser = @IsVerifiedUser,ContactType=@ContactType," +
+                    "ContactInfo=@ContactInfo, AddressType=@AddressType, UserAddress=@UserAddress" +
                     $" WHERE Id = {distributorData.Id}");
+                cmd.Parameters.Add(new SqlParameter("LastName", distributorData.LastName));
+                cmd.Parameters.Add(new SqlParameter("FirstName", distributorData.FirstName));
+                cmd.Parameters.Add(new SqlParameter("DateOfBirth", distributorData.DateOfBirth));
+                cmd.Parameters.Add(new SqlParameter("Gender", (int)distributorData.Gender));
+                cmd.Parameters.Add(new SqlParameter("PictureUrl", distributorData.PictureUrl));
+                cmd.Parameters.Add(new SqlParameter("IsUserVerified", distributorData.IsUserVerified));
+                cmd.Parameters.Add(new SqlParameter("ContactType", (int)distributorData.contactType));
+                cmd.Parameters.Add(new SqlParameter("ContactInfo", distributorData.ContactInfo));
+                cmd.Parameters.Add(new SqlParameter("AddressType", (int)distributorData.addressType));
+                cmd.Parameters.Add(new SqlParameter("UserAddress", distributorData.UserAddress));
+                cmd.Parameters.Add(new SqlParameter("UniqueId", distributorData.UniqueId));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -52,19 +72,21 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"DELETE FROM DistributorData WHERE Id = {distributorData.Id}");
+                SqlCommand cmd = new SqlCommand("DELETE * FROM [NetworkMarketingCP].[dbo].[DistributorData] WHERE Id = @id");
+                cmd.Parameters.Add(new SqlParameter("id", distributorData.Id));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
-        public IDistributorData GetReferalById(int Id)
+        public IDistributorData GetDistributorDataByUniqueId(string Id)
         {
             List<IDistributorData> distributorData = new List<IDistributorData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM DistributorData WHERE Id = {Id}");
+                SqlCommand cmd = new SqlCommand("SELECT * FROM [NetworkMarketingCP].[dbo].[DistributorData] WHERE UniqueId = @UniqueId");
+                cmd.Parameters.Add(new SqlParameter("UniqueId", Id));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())
@@ -79,11 +101,12 @@ namespace NMCP.Implementations.Database
                             Gender = (GenderType)Convert.ToInt32(reader["Gender"]),
                             DateOfBirth = reader["DateOfBirth"].ToString(),
                             PictureUrl = reader["PictureUrl"].ToString(),
-                            IsUserVerified = Convert.ToBoolean(reader["IsUserVerified"]),
+                            IsUserVerified = Convert.ToBoolean(Convert.ToInt32(reader["IsVerifiedUser"])),
                             contactType = (ContactType)Convert.ToInt32(reader["ContactType"]),
                             ContactInfo = reader["ContactInfo"].ToString(),
                             addressType = (AddressType)Convert.ToInt32(reader["AddressType"]),
-                            UserAddress = reader["UserAddress"].ToString()
+                            UserAddress = reader["UserAddress"].ToString(),
+                            UniqueId = reader["UniqueId"].ToString()
                         });
                     }
                 }
@@ -91,7 +114,40 @@ namespace NMCP.Implementations.Database
             }
             return distributorData.First();
         }
-        public List<IDistributorData> GetReferals()
+        public IDistributorData GetDistributorDataById(int Id)
+        {
+            List<IDistributorData> distributorData = new List<IDistributorData>();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM DistributorData WHERE Id = {Id}");
+                conn.Open();
+                cmd.Connection = conn;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        distributorData.Add(new DistributorDataModel()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            LastName = reader["LastName"].ToString(),
+                            FirstName = reader["FirstName"].ToString(),
+                            Gender = (GenderType)Convert.ToInt32(reader["Gender"]),
+                            DateOfBirth = reader["DateOfBirth"].ToString(),
+                            PictureUrl = reader["PictureUrl"].ToString(),
+                            IsUserVerified = Convert.ToBoolean(reader["IsVerifiedUser"]),
+                            contactType = (ContactType)Convert.ToInt32(reader["ContactType"]),
+                            ContactInfo = reader["ContactInfo"].ToString(),
+                            addressType = (AddressType)Convert.ToInt32(reader["AddressType"]),
+                            UserAddress = reader["UserAddress"].ToString(),
+                            UniqueId = reader["UniqueId"].ToString()
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return distributorData.First();
+        }
+        public List<IDistributorData> GetDistributorDatas()
         {
             List<IDistributorData> distributorData = new List<IDistributorData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -111,11 +167,12 @@ namespace NMCP.Implementations.Database
                             Gender = (GenderType)Convert.ToInt32(reader["Gender"]),
                             DateOfBirth = reader["DateOfBirth"].ToString(),
                             PictureUrl = reader["PictureUrl"].ToString(),
-                            IsUserVerified = Convert.ToBoolean(reader["IsUserVerified"]),
+                            IsUserVerified = Convert.ToBoolean(reader["IsVerifiedUser"]),
                             contactType = (ContactType)Convert.ToInt32(reader["ContactType"]),
                             ContactInfo = reader["ContactInfo"].ToString(),
                             addressType = (AddressType)Convert.ToInt32(reader["AddressType"]),
-                            UserAddress = reader["UserAddress"].ToString()
+                            UserAddress = reader["UserAddress"].ToString(),
+                            UniqueId = reader["UniqueId"].ToString()
                         });
                     }
                 }

@@ -22,7 +22,9 @@ namespace NMCP.Implementations.Database
             {
                 SqlCommand cmd = new SqlCommand($"INSERT INTO ProductData" +
                     "(ProductName, UnitPrice) VALUES" +
-                    $"({productData.ProductName}, {productData.UnitPrice}");
+                    "(@ProductName, @UnitPrice");
+                cmd.Parameters.Add(new SqlParameter("ProductName", productData.ProductName));
+                cmd.Parameters.Add(new SqlParameter("UnitPrice", productData.UnitPrice));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -34,7 +36,10 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand($"UPDATE ProductData SET" +
-                    $"ProductName = {productData.ProductName}, UnitPrice = {productData.UnitPrice} WHERE Id = {productData.Id}");
+                    $"ProductName = @ProductPrice, UnitPrice = @UnitPrice WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("ProductName", productData.ProductName));
+                cmd.Parameters.Add(new SqlParameter("UnitPrice", productData.UnitPrice));
+                cmd.Parameters.Add(new SqlParameter("Id", productData.Id));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -45,7 +50,8 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"DELETE FROM ProductData WHERE Id = {productData.Id}");
+                SqlCommand cmd = new SqlCommand("DELETE FROM ProductData WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", productData.Id));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -57,7 +63,8 @@ namespace NMCP.Implementations.Database
             List<IProductData> productData = new List<IProductData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM ProductData WHERE Id = {Id}");
+                SqlCommand cmd = new SqlCommand("SELECT * FROM ProductData WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id",Id));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())

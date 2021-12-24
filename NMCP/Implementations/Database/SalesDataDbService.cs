@@ -84,7 +84,7 @@ namespace NMCP.Implementations.Database
             List<ISalesData> salesData = new List<ISalesData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM SalesData WHERE DistributorId = {DistributorId}");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE DistributorId = {DistributorId}");
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())

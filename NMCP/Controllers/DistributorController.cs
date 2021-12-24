@@ -1,24 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using NMCP.Implementations.Database;
 using NMCP.Implementations.Models;
 using NMCP.Implementations.Services;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace NMCP.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class DistributorController : ControllerBase
     {
-        [Route("hello")]
-        public string ConnStatus()
+        private DistributorManager manager = new DistributorManager();
+        // GET: api/<DistributorController>
+        [HttpGet("{id}")]
+        public DistributorModel GetDistributor(int id)
         {
-            DistributorManager manager = new DistributorManager();
+            manager.GetDistributorById(id);
+            return manager.GetDistributorById(id) as DistributorModel;
+        }
+
+        //// GET api/<DistributorController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
+
+        // POST api/<DistributorController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+            
             DistributorModel distributor = new DistributorModel();
             distributor.distributorAuth = new DistributorAuthModel() { Email = "test@test.test", SHA512Pwd = "test", UserName = "test" };
             distributor.distributorData = new DistributorDataModel()
@@ -45,12 +61,23 @@ namespace NMCP.Controllers
                 DocumentSerial = "SmTHI"
             };
             distributor.referalData = new ReferalDataModel();
-            
-            
-            
-            
+
+
+
+
             manager.RegisterNewDistributor(distributor);
-            return "done";
+        }
+
+        // PUT api/<DistributorController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<DistributorController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }

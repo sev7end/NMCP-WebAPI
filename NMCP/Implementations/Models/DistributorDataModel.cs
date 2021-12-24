@@ -20,5 +20,6 @@ namespace NMCP.Implementations.Models
         public string ContactInfo { get; set;}
         public AddressType addressType { get; set;}
         public string UserAddress { get; set;}
-    }
+        public string UniqueId { get; set; }
+        }
 }

@@ -19,5 +19,6 @@ namespace NMCP.Abstractions.Models
         string ContactInfo { get; set; }
         AddressType addressType { get; set; }
         string UserAddress { get; set; }
+        string UniqueId { get; set; }
     }
 }

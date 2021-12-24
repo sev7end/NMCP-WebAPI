@@ -23,9 +23,15 @@ namespace NMCP.Implementations.Database
             {
                 SqlCommand cmd = new SqlCommand($"INSERT INTO DistributorPersonalData" +
                     "(Id, DocumentType, DocumentNumber, DocumentSerial, IssueDate, ExpirtyDate, PrivateNumber,IssuingAgency) VALUES" +
-                    $"({distributorData.Id} , {(int)distributorData.documentType}, {distributorData.DocumentSerial}, " +
-                    $"{distributorData.IssueDate}, {distributorData.ExpirtyDate}, {distributorData.PrivateNumber}," +
-                    $" {distributorData.IssuingAgency}");
+                    "(@Id, @DocumentType, @DocumentNumber,@DocumentSerial,@IssueDate,@ExpirityDate,@PrivateNumber,@IssuingAgency)");
+                cmd.Parameters.Add(new SqlParameter("Id",distributorData.Id));
+                cmd.Parameters.Add(new SqlParameter("DocumentType",(int)distributorData.documentType));
+                cmd.Parameters.Add(new SqlParameter("DocumentNumber", distributorData.DocumentNumber));
+                cmd.Parameters.Add(new SqlParameter("DocumentSerial",distributorData.DocumentSerial));
+                cmd.Parameters.Add(new SqlParameter("IssueDate",distributorData.IssueDate));
+                cmd.Parameters.Add(new SqlParameter("ExpirityDate",distributorData.ExpirtyDate));
+                cmd.Parameters.Add(new SqlParameter("PrivateNumber",distributorData.PrivateNumber));
+                cmd.Parameters.Add(new SqlParameter("IssuingAgency",distributorData.IssuingAgency));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -37,9 +43,17 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand($"UPDATE DistributorPersonalData SET" +
-                    $" DocumentType = {(int)distributorData.documentType}, DocumentNumber = {distributorData.DocumentNumber}, DocumentSerial = {distributorData.DocumentSerial} " +
-                    $", IssueDate = {distributorData.IssueDate} , ExpirtyDate = {distributorData.ExpirtyDate},PrivateNumber={distributorData.PrivateNumber}," +
-                    $"IssuingAgency = {distributorData.IssuingAgency} WHERE Id = {distributorData.Id}");
+                    " DocumentType = @DocumentType, DocumentNumber = @DocumentNumber, DocumentSerial = @DocumentSerial" +
+                    ", IssueDate =  @IssueDate, ExpirtyDate = @ExpirityDate,PrivateNumber= @PrivateNumber" +
+                    "IssuingAgency = @IssuingAgency WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", distributorData.Id));
+                cmd.Parameters.Add(new SqlParameter("DocumentType", (int)distributorData.documentType));
+                cmd.Parameters.Add(new SqlParameter("DocumentNumber", distributorData.DocumentNumber));
+                cmd.Parameters.Add(new SqlParameter("DocumentSerial", distributorData.DocumentSerial));
+                cmd.Parameters.Add(new SqlParameter("IssueDate", distributorData.IssueDate));
+                cmd.Parameters.Add(new SqlParameter("ExpirityDate", distributorData.ExpirtyDate));
+                cmd.Parameters.Add(new SqlParameter("PrivateNumber", distributorData.PrivateNumber));
+                cmd.Parameters.Add(new SqlParameter("IssuingAgency", distributorData.IssuingAgency));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -50,7 +64,8 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"DELETE FROM DistributorPersonalData WHERE Id = {distributorData.Id}");
+                SqlCommand cmd = new SqlCommand($"DELETE FROM DistributorPersonalData WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", distributorData.Id));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -62,7 +77,8 @@ namespace NMCP.Implementations.Database
             List<IDistributorPersonalData> distributorData = new List<IDistributorPersonalData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM DistributorPersonalData WHERE Id = {Id}");
+                SqlCommand cmd = new SqlCommand("SELECT * FROM DistributorPersonalData WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", Id));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())

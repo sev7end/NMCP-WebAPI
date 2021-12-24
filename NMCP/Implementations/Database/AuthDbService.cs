@@ -20,7 +20,13 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"INSERT INTO DistributorAuth (Id, Email, UserName, SHA512Pwd, TempPwd) VALUES ({authData.Id}, {authData.Email} , {authData.UserName}, {authData.SHA512Pwd}, '-')");
+                SqlCommand cmd = new SqlCommand($"INSERT INTO DistributorAuth (Id, Email, UserName, SHA512Pwd, TempPwd) VALUES " +
+                    "(@Id,@Email,@UserName,@Pwd, '-')");
+                cmd.Parameters.Add(new SqlParameter("Id",authData.Id));
+                cmd.Parameters.Add(new SqlParameter("Email",authData.Email));
+                cmd.Parameters.Add(new SqlParameter("UserName",authData.UserName));
+                cmd.Parameters.Add(new SqlParameter("Pwd",authData.SHA512Pwd));
+
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -31,7 +37,12 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"UPDATE DistributorAuth SET Email = {authData.Email}, UserName = {authData.UserName}, SHA512Pwd = {authData.SHA512Pwd}, TempPwd = {authData.SHA512Pwd} WHERE Id = {authData.Id}");
+                SqlCommand cmd = new SqlCommand($"UPDATE DistributorAuth SET Email = @Email, UserName = @UserName, SHA512Pwd = @Pwd, TempPwd = @TPwd WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", authData.Id));
+                cmd.Parameters.Add(new SqlParameter("Email", authData.Email));
+                cmd.Parameters.Add(new SqlParameter("UserName", authData.UserName));
+                cmd.Parameters.Add(new SqlParameter("Pwd", authData.SHA512Pwd));
+                cmd.Parameters.Add(new SqlParameter("TPwd", authData.TempPwd));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -54,7 +65,7 @@ namespace NMCP.Implementations.Database
             List<IDistributorAuth> authData = new List<IDistributorAuth>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM DistributorAuth WHERE Id = {Id}");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM DistributorAuth WHERE Id = {Id}");
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())
