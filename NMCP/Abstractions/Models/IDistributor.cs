@@ -11,5 +11,6 @@ namespace NMCP.Abstractions.Models
         IDistributorData distributorData { get; set; }
         IDistributorPersonalData distributorPersonalData { get; set; }
         IReferalData referalData { get; set; }
+        IDistributorWallet distributorWallet { get; set; }
     }
 }

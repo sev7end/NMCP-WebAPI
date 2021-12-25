@@ -145,7 +145,7 @@ namespace NMCP.Implementations.Database
                 }
                 conn.Close();
             }
-            return distributorData.First();
+            return distributorData.Count != 0 ? distributorData.First() : null;
         }
         public List<IDistributorData> GetDistributorDatas()
         {

@@ -12,5 +12,6 @@ namespace NMCP.Implementations.Models
         public IDistributorData distributorData { get; set; }
         public IDistributorPersonalData distributorPersonalData { get; set; }
         public IReferalData referalData { get; set; }
+        public IDistributorWallet distributorWallet { get; set; }
     }
 }

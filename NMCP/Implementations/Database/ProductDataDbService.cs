@@ -81,7 +81,7 @@ namespace NMCP.Implementations.Database
                 }
                 conn.Close();
             }
-            return productData.First();
+            return productData.Count != 0 ? productData.First() : null;
         }
         public List<IProductData> GetProducts()
         {

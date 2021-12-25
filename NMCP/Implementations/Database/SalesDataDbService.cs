@@ -22,7 +22,13 @@ namespace NMCP.Implementations.Database
             {
                 SqlCommand cmd = new SqlCommand($"INSERT INTO SalesData" +
                     "(SaleId, DistributorId,  SaleDate, ProductId, UnitsSold, UnitsTotalPrice) VALUES" +
-                    $"({salesData.SaleId}, {salesData.DistributorId},{salesData.SaleDate},{salesData.ProductId},{salesData.UnitsSold},{salesData.UnitsTotalPrice} ");
+                    "(@SaleId, @DistributorId,@SaleDate,@ProductId,@UnitsSold,@TotalPrice)");
+                cmd.Parameters.Add(new SqlParameter("SaleId", salesData.SaleId));
+                cmd.Parameters.Add(new SqlParameter("DistributorId", salesData.DistributorId));
+                cmd.Parameters.Add(new SqlParameter("SaleDate", salesData.SaleDate));
+                cmd.Parameters.Add(new SqlParameter("ProductId", salesData.ProductId));
+                cmd.Parameters.Add(new SqlParameter("UnitsSold", salesData.UnitsSold));
+                cmd.Parameters.Add(new SqlParameter("TotalPrice", salesData.UnitsTotalPrice));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -34,7 +40,13 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand($"UPDATE SalesData SET" +
-                    $"UnitsSold = {salesData.UnitsSold}, UnitsTotalPrice = {salesData.UnitsTotalPrice} WHERE SaleId = {salesData.SaleId}");
+                    "UnitsSold =@UnitsSold, UnitsTotalPrice = @TotalPrice WHERE SaleId = @SaleId");
+                cmd.Parameters.Add(new SqlParameter("SaleId", salesData.SaleId));
+                cmd.Parameters.Add(new SqlParameter("DistributorId", salesData.DistributorId));
+                cmd.Parameters.Add(new SqlParameter("SaleDate", salesData.SaleDate));
+                cmd.Parameters.Add(new SqlParameter("ProductId", salesData.ProductId));
+                cmd.Parameters.Add(new SqlParameter("UnitsSold", salesData.UnitsSold));
+                cmd.Parameters.Add(new SqlParameter("TotalPrice", salesData.UnitsTotalPrice));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
@@ -45,19 +57,21 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"DELETE FROM SalesData WHERE SaleId = {salesData.SaleId}");
+                SqlCommand cmd = new SqlCommand($"DELETE FROM SalesData WHERE SaleId = @SaleId");
+                cmd.Parameters.Add(new SqlParameter("SaleId", salesData.SaleId));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
-        public ISalesData GetSaleById(int SaleId)
+        public ISalesData GetSaleById(string SaleId)
         {
             List<ISalesData> salesData = new List<ISalesData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM SalesData WHERE SaleId = {SaleId}");
+                SqlCommand cmd = new SqlCommand($"SELECT FROM SalesData WHERE SaleId = @SaleId");
+                cmd.Parameters.Add(new SqlParameter("SaleId", SaleId));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())
@@ -79,12 +93,43 @@ namespace NMCP.Implementations.Database
             }
             return salesData.First();
         }
+        public List<ISalesData> GetSaleBetweenDatesAndId(int DistributorId, string FromDate, string ToDate)
+        {
+            List<ISalesData> salesData = new List<ISalesData>();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE DistributorId = @Id AND SaleDate >= '@FromDate' AND SaleDate <= '@Till'");
+                cmd.Parameters.Add(new SqlParameter("Id", DistributorId));
+                cmd.Parameters.Add(new SqlParameter("From", FromDate));
+                cmd.Parameters.Add(new SqlParameter("Till", ToDate));
+                conn.Open();
+                cmd.Connection = conn;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        salesData.Add(new SalesDataModel()
+                        {
+                            SaleId = reader["SaleId"].ToString(),
+                            SaleDate = reader["SaleId"].ToString(),
+                            UnitsTotalPrice = Convert.ToInt32(reader["UnitsTotalPrice"]),
+                            UnitsSold = Convert.ToInt32(reader["UnitsSold"]),
+                            DistributorId = Convert.ToInt32(reader["DistributorId"]),
+                            ProductId = Convert.ToInt32(reader["ProductId"])
+                        });
+                    }
+                }
+                conn.Close();
+            }
+            return salesData;
+        }
         public List<ISalesData> GetSalesByUserId(int DistributorId)
         {
             List<ISalesData> salesData = new List<ISalesData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE DistributorId = {DistributorId}");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE DistributorId = @DistributorId");
+                cmd.Parameters.Add(new SqlParameter("DistributorId", DistributorId));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())

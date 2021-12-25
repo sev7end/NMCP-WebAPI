@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NMCP.Abstractions.Models;
 using NMCP.Implementations.Models;
 using NMCP.Implementations.Services;
 using System;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace NMCP.Controllers
 {
@@ -15,26 +15,21 @@ namespace NMCP.Controllers
     public class DistributorController : ControllerBase
     {
         private DistributorManager manager = new DistributorManager();
-        // GET: api/<DistributorController>
-        [HttpGet("{id}")]
+        private ProductService productService = new ProductService();
+        
+        [HttpGet]
+        [Route("{id}")]
         public DistributorModel GetDistributor(int id)
         {
-            manager.GetDistributorById(id);
             return manager.GetDistributorById(id) as DistributorModel;
         }
 
-        //// GET api/<DistributorController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/<DistributorController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("RegisterDistributor")]
+        public void RegisterDistributor(DistributorModel model)
         {
-            
+            #region temp
+            /*
             DistributorModel distributor = new DistributorModel();
             distributor.distributorAuth = new DistributorAuthModel() { Email = "test@test.test", SHA512Pwd = "test", UserName = "test" };
             distributor.distributorData = new DistributorDataModel()
@@ -61,23 +56,25 @@ namespace NMCP.Controllers
                 DocumentSerial = "SmTHI"
             };
             distributor.referalData = new ReferalDataModel();
-
-
-
-
-            manager.RegisterNewDistributor(distributor);
+            */
+            #endregion
+            manager.RegisterNewDistributor(model);
         }
 
-        // PUT api/<DistributorController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        [HttpPost]
+        [Route("RegisterProduct")]
+        public bool RegisterProduct(int id, string name, decimal price)
         {
+            productService.RegisterProduct(id, name, price);
+            return productService.RegisterProduct(id, name, price);
         }
 
-        // DELETE api/<DistributorController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpGet]
+        [Route("GetProduct")]
+        public IProductData GetProduct(int id)
         {
+            return productService.GetProductById(id);
         }
     }
 }

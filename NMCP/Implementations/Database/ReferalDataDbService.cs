@@ -53,19 +53,42 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"DELETE FROM ReferalData WHERE Id = {referalData.Id}");
+                SqlCommand cmd = new SqlCommand($"DELETE FROM ReferalData WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", referalData.Id));
                 conn.Open();
                 cmd.Connection = conn;
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
+        public List<int> GetDistributorsReferalsByIdAndLevel(int Id, int Level)
+        {
+            List<int> Ids = new List<int>();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM ReferalData WHERE ReferallId = @Id AND ReferallLevel = @Level");
+                cmd.Parameters.Add(new SqlParameter("Id", Id));
+                cmd.Parameters.Add(new SqlParameter("Level", Level));
+                conn.Open();
+                cmd.Connection = conn;
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Ids.Add(Convert.ToInt32(reader["Id"]));
+                    }
+                }
+                conn.Close();
+            }
+            return Ids.Count != 0 ? Ids : null;
+        }
         public IReferalData GetReferalById(int Id)
         {
             List<IReferalData> referalData = new List<IReferalData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT * FROM ReferalData WHERE Id = {Id}");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM ReferalData WHERE Id = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", Id));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())

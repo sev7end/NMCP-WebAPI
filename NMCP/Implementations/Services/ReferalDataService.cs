@@ -59,5 +59,9 @@ namespace NMCP.Implementations.Services
         {
             return referalDatabase.GetReferalById(Id);
         }
+        public List<int> GetReferedUsersByIdAndLevel(int Id, int Level)
+        {
+            return referalDatabase.GetDistributorsReferalsByIdAndLevel(Id, Level);
+        }
     }
 }
