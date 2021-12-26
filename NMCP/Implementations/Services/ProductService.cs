@@ -16,23 +16,22 @@ namespace NMCP.Implementations.Services
         {
             databaseService = new ProductDataDbService();
         }
-        public bool RegisterProduct(int id,string name, decimal unitPrice)
+        public void RegisterProduct(string name, decimal unitPrice)
         {
-            if (databaseService.GetProductById(id) == null)
+            databaseService.AddItemToCollection(new ProductDataModel()
             {
-                databaseService.AddItemToCollection(new ProductDataModel()
-                {
-                    Id = id,
-                    ProductName = name,
-                    UnitPrice = unitPrice
-                });
-                return true;
-            }
-            return false;
+               
+                ProductName = name,
+                UnitPrice = unitPrice
+            });       
         }
         public IProductData GetProductById(int id)
         {
             return databaseService.GetProductById(id);
+        }
+        public List<IProductData> GetProducts()
+        {
+            return databaseService.GetProducts();
         }
     }
 }

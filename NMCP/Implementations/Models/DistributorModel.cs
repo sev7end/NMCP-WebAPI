@@ -8,10 +8,10 @@ namespace NMCP.Implementations.Models
 {
     public class DistributorModel : IDistributor
     {
-        public IDistributorAuth distributorAuth { get; set; }
-        public IDistributorData distributorData { get; set; }
-        public IDistributorPersonalData distributorPersonalData { get; set; }
-        public IReferalData referalData { get; set; }
-        public IDistributorWallet distributorWallet { get; set; }
+        public DistributorAuthModel distributorAuth { get; set; }
+        public DistributorDataModel distributorData { get; set; }
+        public DistributorPersonalDataModel distributorPersonalData { get; set; }
+        public ReferalDataModel referalData { get; set; }
+        public DistributorWalletModel distributorWallet { get; set; }
     }
 }

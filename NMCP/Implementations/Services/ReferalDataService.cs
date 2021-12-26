@@ -17,11 +17,13 @@ namespace NMCP.Implementations.Services
         }
 
         private bool IsReferalValid(int referalId) {
-            return (referalDatabase.GetReferalById(referalId) != null) ? true : false;
+            bool status = (referalDatabase.GetReferalById(referalId) != null);
+            return status;
         }
         public bool IsRefererEligible(int referalId)
         {
-            return (referalDatabase.GetReferalById(referalId).ReferedUsers > 3 && referalDatabase.GetReferalById(referalId).ReferallLevel > 5) ? true : false;
+            bool status = (referalDatabase.GetReferalById(referalId).ReferedUsers < 3 && referalDatabase.GetReferalById(referalId).ReferallLevel < 5);
+            return status;
         }
         private int GetRefererLevel(int referalId)
         {

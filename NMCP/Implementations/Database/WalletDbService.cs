@@ -66,6 +66,7 @@ namespace NMCP.Implementations.Database
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand cmd = new SqlCommand($"SELECT * FROM DistributorWallet WHERE DistributorId = @Id");
+                cmd.Parameters.Add(new SqlParameter("Id", Id));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())
@@ -74,8 +75,8 @@ namespace NMCP.Implementations.Database
                     {
                         walletData.Add(new DistributorWalletModel()
                         {
-                            DistributorId = Convert.ToInt32(reader["Id"]),
-                            WalletMoney = Convert.ToDecimal(reader["Money"])
+                            DistributorId = Convert.ToInt32(reader["DistributorId"]),
+                            WalletMoney = Convert.ToDecimal(reader["WalletMoney"].ToString())
                            
                         });
                     }
@@ -83,7 +84,7 @@ namespace NMCP.Implementations.Database
                 conn.Close();
             }
             walletData.First().transactions = transactionDbService.GetTransactionsForId(Id);
-            return walletData.First();
+            return walletData.Count!= 0 ? walletData.First() : null;
         }
     }
 }

@@ -43,14 +43,14 @@ namespace NMCP.Implementations.Database
                 conn.Close();
             }
         }
-        public bool CheckIfSaleExists(int ForId, string SaleId)
+        public bool CheckIfSaleExists(int forId, string saleId)
         {
             List<IPaidSales> paidSale = new List<IPaidSales>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT * FROM DistributorAuth WHERE ForId = @forId AND SaleId = @saleId");
-                cmd.Parameters.Add(new SqlParameter("forId", ForId));
-                cmd.Parameters.Add(new SqlParameter("saleId", SaleId));
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM PaidSales WHERE ForId = @forId AND SaleId = @saleId");
+                cmd.Parameters.Add(new SqlParameter("forId", forId));
+                cmd.Parameters.Add(new SqlParameter("saleId", saleId));
                 conn.Open();
                 cmd.Connection = conn;
                 using (var reader = cmd.ExecuteReader())

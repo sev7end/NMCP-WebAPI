@@ -22,6 +22,8 @@ namespace NMCP.Implementations.Services
             distDataService = new DistributorDataDbService();
             personalDataService = new PersonalDataDbService();
             referalDataService = new ReferalDataService();
+            walletService = new WalletDbService();
+            transactionDbService = new TransactionDbService();
             saleService = new SaleService();
         }
 
@@ -55,11 +57,11 @@ namespace NMCP.Implementations.Services
                 var walletData = walletService.GetDistributorWallet(Id);
                 IDistributor distributor = new DistributorModel()
                 {
-                    distributorAuth = authData,
-                    distributorPersonalData = personalData,
-                    distributorData = distData,
-                    referalData = referalData,
-                    distributorWallet = walletData
+                    distributorAuth = authData as DistributorAuthModel,
+                    distributorPersonalData = personalData as DistributorPersonalDataModel,
+                    distributorData = distData as DistributorDataModel,
+                    referalData = referalData as ReferalDataModel,
+                    distributorWallet = walletData as DistributorWalletModel
                 };
                 return distributor;
             }
@@ -68,14 +70,18 @@ namespace NMCP.Implementations.Services
         private List<string> filterPerformedSales(List<string> saleIds, int Id)
         {
             List<string> FilteredList = new List<string>();
-            foreach(var item in saleIds)
+            if (saleIds != null)
             {
-                if (!saleService.SaleExists(Id, item))
+                foreach (var item in saleIds)
                 {
-                    FilteredList.Add(item);
+                    if (!saleService.SaleExists(Id, item))
+                    {
+                        FilteredList.Add(item);
+                    }
                 }
+                return FilteredList;
             }
-            return FilteredList;
+            return null;
         }
         public decimal GeneratePayoutForId(int Id, string from, string to)
         {
@@ -98,19 +104,28 @@ namespace NMCP.Implementations.Services
             {
                 foreach(var item in UserLevelTwoAffiliates)
                 {
-                    LevelTwoSales.AddRange(filterPerformedSales(saleService.GetSalesByIdAndDate(item, from, to), Id));
+                    var temp = filterPerformedSales(saleService.GetSalesByIdAndDate(item, from, to), Id);
+                    if(temp!= null)
+                        LevelTwoSales.AddRange(temp);
                 }
-                LevelTwoEarnings = (saleService.GetTotalOfSales(LevelTwoSales) / 100) * 5;
-                LevelTwoSales.ForEach(o => saleService.RegisterPaidSale(Id, o));
-
+                if (LevelTwoSales.Count != 0)
+                {
+                    LevelTwoEarnings = (saleService.GetTotalOfSales(LevelTwoSales) / 100) * 5;
+                    LevelTwoSales.ForEach(o => saleService.RegisterPaidSale(Id, o));
+                }
                 if (UserLevelThreeAffiliates != null)
                 {
                     foreach (var itemtwo in UserLevelThreeAffiliates)
                     {
-                        LevelThreeSales.AddRange(filterPerformedSales(saleService.GetSalesByIdAndDate(itemtwo, from, to),Id));
+                        var temp = filterPerformedSales(saleService.GetSalesByIdAndDate(itemtwo, from, to), Id);
+                        if(temp!= null)
+                            LevelThreeSales.AddRange(temp);
                     }
-                    LevelThreeEarnings = saleService.GetTotalOfSales(LevelThreeSales) / 100;
-                    LevelThreeSales.ForEach(o => saleService.RegisterPaidSale(Id, o));
+                    if (LevelTwoSales.Count != 0)
+                    {
+                        LevelThreeEarnings = saleService.GetTotalOfSales(LevelThreeSales) / 100;
+                        LevelThreeSales.ForEach(o => saleService.RegisterPaidSale(Id, o));
+                    }
                 }
             }
             return (decimal)CurrUserEarnings + (decimal)LevelTwoEarnings + (decimal)LevelThreeEarnings;
@@ -122,6 +137,7 @@ namespace NMCP.Implementations.Services
             walletService.UpdateItemInCollection(IdWallet);
             transactionDbService.AddItemToCollection(new TransactionModel()
             {
+                TowardsId = ToId,
                 Amount = Amount,
                 TransactionDate = DateTime.Now.ToString("dd/MM/yyyy")
             });

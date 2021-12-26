@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NMCP.Abstractions.Models;
+using NMCP.Implementations.Models;
 using NMCP.Implementations.Services;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace NMCP.Controllers
         private SaleService saleService = new SaleService();
         [HttpPost]
         [Route("Register")] //Date format : dd/mm/yyyy
-        public int RegisterSale(ISalesData data)
+        public int RegisterSale(SalesDataModel data)
         {
            /* Status codes: 
              * 0 : success
@@ -24,7 +25,7 @@ namespace NMCP.Controllers
              */
             return saleService.RegisterSale(data);
         }
-        [HttpPost]
+        [HttpGet]
         [Route("{Id}")]
         public List<ISalesData> GetSalesForId(int Id)
         {

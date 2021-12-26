@@ -37,7 +37,7 @@ namespace NMCP.Implementations.Database
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"UPDATE ReferalData SET" +
+                SqlCommand cmd = new SqlCommand($"UPDATE ReferalData SET " +
                     $"ReferedUsers = @ReferedUsers WHERE Id = @Id");
                 cmd.Parameters.Add(new SqlParameter("Id", referalData.Id));
                 cmd.Parameters.Add(new SqlParameter("ReferalId", referalData.ReferalId));

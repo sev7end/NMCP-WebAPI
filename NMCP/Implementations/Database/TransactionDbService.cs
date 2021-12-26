@@ -37,7 +37,7 @@ namespace NMCP.Implementations.Database
             List<ITransaction> walletData = new List<ITransaction>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT * FROM TransactionData WHERE TowardsId = @Id");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM TransactionData WHERE TowardsId = @TowardsId");
                 cmd.Parameters.Add(new SqlParameter("TowardsId", Id));
                 conn.Open();
                 cmd.Connection = conn;
@@ -48,8 +48,8 @@ namespace NMCP.Implementations.Database
                         walletData.Add(new TransactionModel()
                         {
                             TowardsId = Convert.ToInt32(reader["TowardsId"]),
-                            Amount = Convert.ToDecimal(reader["Amount"]),
-                            TransactionDate = reader["Amount"].ToString()
+                            Amount = Convert.ToDecimal(reader["Amount"].ToString()),
+                            TransactionDate = reader["TransactionDate"].ToString()
 
                         });
                     }

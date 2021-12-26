@@ -70,7 +70,7 @@ namespace NMCP.Implementations.Database
             List<ISalesData> salesData = new List<ISalesData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT FROM SalesData WHERE SaleId = @SaleId");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE SaleId = @SaleId");
                 cmd.Parameters.Add(new SqlParameter("SaleId", SaleId));
                 conn.Open();
                 cmd.Connection = conn;
@@ -81,8 +81,8 @@ namespace NMCP.Implementations.Database
                         salesData.Add(new SalesDataModel()
                         {
                             SaleId = reader["SaleId"].ToString(),
-                            SaleDate = reader["SaleId"].ToString(),
-                            UnitsTotalPrice = Convert.ToInt32(reader["UnitsTotalPrice"]),
+                            SaleDate = reader["SaleDate"].ToString(),
+                            UnitsTotalPrice = Convert.ToDecimal(reader["UnitsTotalPrice"].ToString()),
                             UnitsSold = Convert.ToInt32(reader["UnitsSold"]),
                             DistributorId = Convert.ToInt32(reader["DistributorId"]),
                             ProductId = Convert.ToInt32(reader["ProductId"])
@@ -98,7 +98,7 @@ namespace NMCP.Implementations.Database
             List<ISalesData> salesData = new List<ISalesData>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE DistributorId = @Id AND SaleDate >= '@FromDate' AND SaleDate <= '@Till'");
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM SalesData WHERE DistributorId = @Id AND SaleDate >= @From AND SaleDate <= @Till");
                 cmd.Parameters.Add(new SqlParameter("Id", DistributorId));
                 cmd.Parameters.Add(new SqlParameter("From", FromDate));
                 cmd.Parameters.Add(new SqlParameter("Till", ToDate));
@@ -111,8 +111,8 @@ namespace NMCP.Implementations.Database
                         salesData.Add(new SalesDataModel()
                         {
                             SaleId = reader["SaleId"].ToString(),
-                            SaleDate = reader["SaleId"].ToString(),
-                            UnitsTotalPrice = Convert.ToInt32(reader["UnitsTotalPrice"]),
+                            SaleDate = reader["SaleDate"].ToString(),
+                            UnitsTotalPrice = Convert.ToDecimal(reader["UnitsTotalPrice"].ToString()),
                             UnitsSold = Convert.ToInt32(reader["UnitsSold"]),
                             DistributorId = Convert.ToInt32(reader["DistributorId"]),
                             ProductId = Convert.ToInt32(reader["ProductId"])
@@ -139,8 +139,8 @@ namespace NMCP.Implementations.Database
                         salesData.Add(new SalesDataModel()
                         {
                             SaleId = reader["SaleId"].ToString(),
-                            SaleDate = reader["SaleId"].ToString(),
-                            UnitsTotalPrice = Convert.ToInt32(reader["UnitsTotalPrice"]),
+                            SaleDate = reader["SaleDate"].ToString(),
+                            UnitsTotalPrice = Convert.ToDecimal(reader["UnitsTotalPrice"].ToString()),
                             UnitsSold = Convert.ToInt32(reader["UnitsSold"]),
                             DistributorId = Convert.ToInt32(reader["DistributorId"]),
                             ProductId = Convert.ToInt32(reader["ProductId"])
@@ -166,8 +166,8 @@ namespace NMCP.Implementations.Database
                         salesData.Add(new SalesDataModel()
                         {
                             SaleId = reader["SaleId"].ToString(),
-                            SaleDate = reader["SaleId"].ToString(),
-                            UnitsTotalPrice = Convert.ToInt32(reader["UnitsTotalPrice"]),
+                            SaleDate = reader["SaleDate"].ToString(),
+                            UnitsTotalPrice = Convert.ToDecimal(reader["UnitsTotalPrice"].ToString()),
                             UnitsSold = Convert.ToInt32(reader["UnitsSold"]),
                             DistributorId = Convert.ToInt32(reader["DistributorId"]),
                             ProductId = Convert.ToInt32(reader["ProductId"])

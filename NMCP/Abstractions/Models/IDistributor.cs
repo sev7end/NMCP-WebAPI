@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NMCP.Implementations.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +8,10 @@ namespace NMCP.Abstractions.Models
 {
     public interface IDistributor
     {
-        IDistributorAuth distributorAuth { get; set; }
-        IDistributorData distributorData { get; set; }
-        IDistributorPersonalData distributorPersonalData { get; set; }
-        IReferalData referalData { get; set; }
-        IDistributorWallet distributorWallet { get; set; }
+        DistributorAuthModel distributorAuth { get; set; }
+        DistributorDataModel distributorData { get; set; }
+        DistributorPersonalDataModel distributorPersonalData { get; set; }
+        ReferalDataModel referalData { get; set; }
+        DistributorWalletModel distributorWallet { get; set; }
     }
 }

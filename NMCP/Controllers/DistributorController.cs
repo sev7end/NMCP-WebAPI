@@ -63,18 +63,24 @@ namespace NMCP.Controllers
 
 
         [HttpPost]
-        [Route("RegisterProduct")]
-        public bool RegisterProduct(int id, string name, decimal price)
+        [Route("Products/Add")]
+        public void RegisterProduct(string name, decimal price)
         {
-            productService.RegisterProduct(id, name, price);
-            return productService.RegisterProduct(id, name, price);
+            productService.RegisterProduct(name, price);
         }
 
         [HttpGet]
-        [Route("GetProduct")]
+        [Route("Products/{id}")]
         public IProductData GetProduct(int id)
         {
             return productService.GetProductById(id);
+        }
+
+        [HttpGet]
+        [Route("Products")]
+        public List<IProductData> GetProducts(int id)
+        {
+            return productService.GetProducts();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace NMCP.Implementations.Database
             {
                 SqlCommand cmd = new SqlCommand($"INSERT INTO ProductData" +
                     "(ProductName, UnitPrice) VALUES" +
-                    "(@ProductName, @UnitPrice");
+                    "(@ProductName, @UnitPrice)");
                 cmd.Parameters.Add(new SqlParameter("ProductName", productData.ProductName));
                 cmd.Parameters.Add(new SqlParameter("UnitPrice", productData.UnitPrice));
                 conn.Open();
@@ -74,8 +74,8 @@ namespace NMCP.Implementations.Database
                         productData.Add(new ProductDataModel()
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            ProductName = reader["country"].ToString(),
-                            UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice"))
+                            ProductName = reader["ProductName"].ToString(),
+                            UnitPrice = Convert.ToDecimal(reader["UnitPrice"].ToString())
                         });
                     }
                 }
@@ -98,8 +98,8 @@ namespace NMCP.Implementations.Database
                         productData.Add(new ProductDataModel()
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            ProductName = reader["country"].ToString(),
-                            UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice"))
+                            ProductName = reader["ProductName"].ToString(),
+                            UnitPrice = Convert.ToDecimal(reader["UnitPrice"].ToString())
                         });
                     }
                 }
