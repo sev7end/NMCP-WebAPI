@@ -320,6 +320,30 @@
             "rid": "win"
           }
         }
+      },
+      "NMCP.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/NMCP.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NMCP.Core.dll": {}
+        }
+      },
+      "NMCP.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "NMCP.Core": "1.0.0",
+          "System.Data.SqlClient": "4.8.3"
+        },
+        "compile": {
+          "bin/placeholder/NMCP.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NMCP.Infrastructure.dll": {}
+        }
       }
     }
   },
@@ -913,35 +937,46 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "NMCP.Core/1.0.0": {
+      "type": "project",
+      "path": "../NMCP.Core/NMCP.Core.csproj",
+      "msbuildProject": "../NMCP.Core/NMCP.Core.csproj"
+    },
+    "NMCP.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../NMCP.Infrastructure/NMCP.Infrastructure.csproj",
+      "msbuildProject": "../NMCP.Infrastructure/NMCP.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "NMCP.Infrastructure >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3",
       "System.Configuration.ConfigurationManager >= 6.0.0",
       "System.Data.SqlClient >= 4.8.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tokoq\\.nuget\\packages\\": {},
-    "G:\\Visual Studio Sdks\\NuGetPackages": {},
+    "C:\\Users\\asikharulidze\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP\\NMCP.csproj",
-      "projectName": "NMCP",
-      "projectPath": "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP\\NMCP.csproj",
-      "packagesPath": "C:\\Users\\tokoq\\.nuget\\packages\\",
-      "outputPath": "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP\\obj\\",
+      "projectUniqueName": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP\\NMCP.Web.csproj",
+      "projectName": "NMCP.Web",
+      "projectPath": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP\\NMCP.Web.csproj",
+      "packagesPath": "C:\\Users\\asikharulidze\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "G:\\Visual Studio Sdks\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\tokoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asikharulidze\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -956,7 +991,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Infrastructure\\NMCP.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Infrastructure\\NMCP.Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -1000,7 +1039,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   }

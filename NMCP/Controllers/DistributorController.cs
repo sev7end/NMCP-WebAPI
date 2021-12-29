@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NMCP.Abstractions.Models;
-using NMCP.Implementations.Models;
-using NMCP.Implementations.Services;
+using NMCP.Core.Models;
+using NMCP.Infrastructure.Models;
+using NMCP.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
