@@ -1,5 +1,5 @@
 ﻿using NMCP.Core.Models;
-using NMCP.Implementations.Database;
+using NMCP.Infrastructure.Data;
 using NMCP.Infrastructure.Interfaces;
 using NMCP.Infrastructure.Models;
 using System;

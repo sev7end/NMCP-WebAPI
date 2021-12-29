@@ -1,4 +1,4 @@
-﻿using NMCP.Abstractions.DataTypes;
+﻿using NMCP.Core.Enums;
 using NMCP.Core.Models;
 using System;
 using System.Collections.Generic;

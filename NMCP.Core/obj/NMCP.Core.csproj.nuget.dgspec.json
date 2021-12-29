@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Core\\NMCP.Core.csproj": {}
+    "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP.Core\\NMCP.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Core\\NMCP.Core.csproj": {
+    "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP.Core\\NMCP.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Core\\NMCP.Core.csproj",
+        "projectUniqueName": "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP.Core\\NMCP.Core.csproj",
         "projectName": "NMCP.Core",
-        "projectPath": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Core\\NMCP.Core.csproj",
-        "packagesPath": "C:\\Users\\asikharulidze\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\asikharulidze\\Desktop\\Tornike\\NMCP-WebAPI\\NMCP.Core\\obj\\",
+        "projectPath": "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP.Core\\NMCP.Core.csproj",
+        "packagesPath": "C:\\Users\\tokoq\\.nuget\\packages\\",
+        "outputPath": "H:\\GithubRepos\\NetworkMarketingControlPanel\\NMCP.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "G:\\Visual Studio Sdks\\NuGetPackages",
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\asikharulidze\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tokoq\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }

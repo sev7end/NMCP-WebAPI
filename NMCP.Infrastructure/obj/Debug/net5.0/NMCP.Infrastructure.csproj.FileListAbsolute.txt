@@ -1,0 +1,15 @@
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.csproj.AssemblyReference.cache
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.AssemblyInfoInputs.cache
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.AssemblyInfo.cs
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.csproj.CoreCompileInputs.cache
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\bin\Debug\net5.0\NMCP.Infrastructure.deps.json
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\bin\Debug\net5.0\NMCP.Infrastructure.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\bin\Debug\net5.0\ref\NMCP.Infrastructure.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\bin\Debug\net5.0\NMCP.Infrastructure.pdb
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\bin\Debug\net5.0\NMCP.Core.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\bin\Debug\net5.0\NMCP.Core.pdb
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.csproj.CopyComplete
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\ref\NMCP.Infrastructure.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Infrastructure\obj\Debug\net5.0\NMCP.Infrastructure.pdb

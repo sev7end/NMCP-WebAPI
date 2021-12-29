@@ -1,0 +1,11 @@
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\NMCP.Core.GeneratedMSBuildEditorConfig.editorconfig
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\NMCP.Core.AssemblyInfoInputs.cache
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\NMCP.Core.AssemblyInfo.cs
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\NMCP.Core.csproj.CoreCompileInputs.cache
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\bin\Debug\net5.0\NMCP.Core.deps.json
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\bin\Debug\net5.0\NMCP.Core.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\bin\Debug\net5.0\ref\NMCP.Core.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\bin\Debug\net5.0\NMCP.Core.pdb
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\NMCP.Core.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\ref\NMCP.Core.dll
+H:\GithubRepos\NetworkMarketingControlPanel\NMCP.Core\obj\Debug\net5.0\NMCP.Core.pdb
